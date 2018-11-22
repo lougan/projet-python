@@ -8,14 +8,11 @@ pygame.init()
 
 #Tableau de sauvegarde de bonnes balles
 bulletnew = []
-
 #tableau pour tirs multiples
 bullets = []
 
 #tableau des enemis
 ennemis = []
-
-#variable du score d'ennemis
 
 #creation de la fenetre
 largeur = 1280
@@ -42,13 +39,6 @@ imageBullet = pygame.image.load("balle.png").convert_alpha()
 time = 0
 timer = 0
 
-
-
-# creation d'un rectangle pour positioner l'image du texte
-#rectText = imageText.get_rect()
-#rectText.x = 10
-#rectText.y = 10
-
 #bordures
 borderLeft = (hauteur - rectPerso.y)
 borderRight = ( largeur - rectPerso.x)
@@ -65,45 +55,28 @@ rectFond2 = imageFond2.get_rect()
 rectFond2.x = 0
 rectFond2.y = 720
 
-
 # creation d'un rectangle pour positioner du perso
 rectPerso = imagePerso.get_rect()
 rectPerso.x = 400
 rectPerso.y = 100
 
-
-## Ajoutons un texte fixe dans la fenetre :
 # Choix de la police pour le texte
 font = pygame.font.Font(None, 34)
 
+score=0
 # Creation de l'image correspondant au texte
-imageText = font.render('Score : ', True, (255, 0 , 255))
-#imageText2 = font.render('points', True, (255, 0 , 255))
-ImText = imageText.get_rect()
-ImText.x = 20
-ImText.y = 20
-#ImText2 = imageText2.get_rect()
-#ImText2.x = ImText.x + 150
-#ImText2.y = 20
-
-
-
-# creation d'un rectangle pour positioner l'image du texte
+imageText = font.render('SCORE : '+str(score), True, (255, 255, 255))
 rectText = imageText.get_rect()
 rectText.x = 10
 rectText.y = 10
 
+
 # servira a regler l'horloge du jeu
 horloge = pygame.time.Clock()
-
-# la boucle dont on veut sortir :
-#   - en appuyant sur ESCAPE
-#   - en cliquant sur le bouton de fermeture
 i=1;
 continuer=1
 time=0
 tps=0
-score=0
 
 while continuer:
 
@@ -111,9 +84,9 @@ while continuer:
     horloge.tick(60)
     time+=1
     i=i+1
-    print (i)
-    print(score)
-    score = 0
+    #print (i)
+    #print(score)
+    #score = 0
 
     rectFond.y += 1
     rectFond2.y += 1
@@ -174,7 +147,7 @@ while continuer:
     # le perso tire
     if touches[K_SPACE] and time/30>=0.7:
         rectBullet = imageBullet.get_rect()
-        rectBullet.x =  rectPerso.x
+        rectBullet.x =  rectPerso.x +20
         rectBullet.y = rectPerso.y
         bullets.append(rectBullet)
         time=0
@@ -208,16 +181,10 @@ while continuer:
 
     for Enemi in ennemis:
         for rectBullet in bullets:
-            if Enemi.colliderect(rectBullet):
-                score+=1
+            if  Enemi.colliderect(rectBullet):
                 eAvirer.append(Enemi)
                 tAvirer.append(rectBullet)
-
-    #point=1
-    #for Enemi in ennemis:
-    #    for rectBullet in bullets:
-    #        if Enemi.colliderect(rectBullet):
-    #            score += point
+                score = score + 50
 
     for Enemi in eAvirer:
         ennemis.remove(Enemi)
@@ -227,22 +194,8 @@ while continuer:
         bullets.remove(rectBullet)
 
 
-    # collision tirs / ennemis
-#    TAB=[]
-#    for rectBullet in bullets:
-#           for Enemi in ennemis:
-#                 if rectBullet.colliderect(Enemi):
-#                       tab = TAB
-#                 else:
-#                       TAB.append(Enemi)
-
-
-
-
-    #print (rectPerso.x)
-    #print (rectPerso.y)
-    print ("nb Bullets "+ str(len(bullets)))
-    print ("nb enemie "+ str(len(Enemi)))
+    #print ("nb Bullets "+ str(len(bullets)))
+    #print ("nb enemie "+ str(len(Enemi)))
 
     # si la touche ESC est enfoncee, on sortira
     # au debut du prochain tour de boucle
@@ -263,18 +216,23 @@ while continuer:
         fenetre.blit(imageEnemi, Enemi)
 
     # Affichage du Texte
-    #fenetre.blit(imageText, rectText, str(score))
+    fenetre.blit(imageText, rectText)
 
 
     #affichage des balles
     for rectBullet in bullets:
             fenetre.blit(imageBullet, rectBullet)
 
-    #Affichage du Score
-    #fenetre.blit(ImageText)
+
+    imageText = font.render('SCORE : '+str(score), True, (255, 255, 255))
+    rectText = imageText.get_rect()
+    rectText.x = 10
+    rectText.y = 10
 
     # rafraichissement
     pygame.display.update()
+    # rafraichissement
+    pygame.display.flip()
 
     # Si on a clique sur le bouton de fermeture on sortira
     # au debut du prochain tour de boucle
