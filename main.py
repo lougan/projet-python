@@ -25,8 +25,8 @@ imagePerso = pygame.image.load("perso.png").convert_alpha()
 #lecture de l'image de l'enemie
 imageEnemi = pygame.image.load("perso2.png").convert_alpha()
 
-# lecture du son du tir
-#son_Tir = pygame.mixer.Sound("b.mp3")
+#son background
+pygame.mixer.music.load('OST.mp3')
 
 # creation d'un rectangle pour positioner l'image du personnage
 rectPerso = imagePerso.get_rect()
@@ -78,6 +78,7 @@ continuer=1
 time=0
 tps=0
 
+son = pygame.mixer.music.play()
 while continuer:
 
     # fixons le nombre max de frames / secondes
