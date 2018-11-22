@@ -70,6 +70,13 @@ rectText = imageText.get_rect()
 rectText.x = 10
 rectText.y = 10
 
+vie=3
+# Creation de l'image correspondant au texte
+imageText2 = font.render('Life : '+str(vie), True, (255, 255 , 255))
+rectText2 = imageText2.get_rect()
+rectText2.x = 1200
+rectText2.y = 10
+
 
 # servira a regler l'horloge du jeu
 horloge = pygame.time.Clock()
@@ -187,6 +194,20 @@ while continuer:
                 tAvirer.append(rectBullet)
                 score = score + 50
 
+    #collision ennemi-perso
+    coup = 0
+    for Enemi in ennemis:
+        if Enemi.colliderect(rectPerso):
+            eAvirer.append(Enemi)
+            coup += 1
+
+    if coup == 1:
+        vie = vie - 1
+
+    if vie == 0:
+        continuer = 0
+
+
     for Enemi in eAvirer:
         ennemis.remove(Enemi)
 
@@ -194,6 +215,16 @@ while continuer:
     for rectBullet in tAvirer:
         bullets.remove(rectBullet)
 
+
+    if score > 500 :
+        if tps==0:
+            Enemi= imageEnemi.get_rect()
+            Enemi.x = randint(100,1150)
+            Enemi.y = -100
+            ennemis.append(Enemi)
+            tps=200
+
+    tps -= 1
 
     #print ("nb Bullets "+ str(len(bullets)))
     #print ("nb enemie "+ str(len(Enemi)))
@@ -218,6 +249,7 @@ while continuer:
 
     # Affichage du Texte
     fenetre.blit(imageText, rectText)
+    fenetre.blit(imageText2, rectText2)
 
 
     #affichage des balles
@@ -229,6 +261,11 @@ while continuer:
     rectText = imageText.get_rect()
     rectText.x = 10
     rectText.y = 10
+
+    imageText2 = font.render('Vie : '+str(vie), True, (255, 255 , 255))
+    rectText2 = imageText2.get_rect()
+    rectText2.x = 1200
+    rectText2.y = 10
 
     # rafraichissement
     pygame.display.update()
