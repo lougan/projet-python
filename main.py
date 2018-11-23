@@ -215,14 +215,13 @@ while continuer:
     for rectBullet in tAvirer:
         bullets.remove(rectBullet)
 
-
     if score > 500 :
-        if tps==0:
+        if tps==0 :
             Enemi= imageEnemi.get_rect()
-            Enemi.x = randint(100,1150)
-            Enemi.y = -100
+            Enemi.x = randint(500,1150)
+            Enemi.y = -500
             ennemis.append(Enemi)
-            tps=200
+
 
     tps -= 1
 
