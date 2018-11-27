@@ -24,7 +24,7 @@ imagePerso = pygame.image.load("perso.png").convert_alpha()
 
 #lecture de l'image de l'enemie
 imageEnemi = pygame.image.load("perso2.png").convert_alpha()
-
+0
 #son background
 pygame.mixer.music.load('OST.mp3')
 
@@ -215,13 +215,13 @@ while continuer:
     for rectBullet in tAvirer:
         bullets.remove(rectBullet)
 
-    if score > 500 :
+    if score > 50 :
         if tps==0 :
             Enemi= imageEnemi.get_rect()
             Enemi.x = randint(500,1150)
-            Enemi.y = -500
+            Enemi.y = 500
             ennemis.append(Enemi)
-
+            tps = 0
 
     tps -= 1
 
@@ -265,6 +265,8 @@ while continuer:
     rectText2 = imageText2.get_rect()
     rectText2.x = 1200
     rectText2.y = 10
+
+
 
     # rafraichissement
     pygame.display.update()
