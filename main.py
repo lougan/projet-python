@@ -20,11 +20,21 @@ hauteur = 720
 fenetre=pygame.display.set_mode((largeur,hauteur))
 
 # lecture de l'image du perso
-imagePerso = pygame.image.load("perso.png").convert_alpha()
+#imagePerso = pygame.image.load("perso.png").convert_alpha()
+#############################################################
+# Animation personnage
+imagesPerso = []
+imagesPerso.append(pygame.image.load('ship1.png'))
+imagesPerso.append(pygame.image.load('ship2.png'))
+imagesPerso.append(pygame.image.load('ship3.png'))
+imagesPerso.append(pygame.image.load('ship4.png'))
+index = 0
+imagePerso = imagesPerso[index]
+#############################################################
 
 #lecture de l'image de l'enemie
 imageEnemi = pygame.image.load("perso2.png").convert_alpha()
-0
+
 #son background
 pygame.mixer.music.load('OST.mp3')
 
@@ -215,13 +225,13 @@ while continuer:
     for rectBullet in tAvirer:
         bullets.remove(rectBullet)
 
-    if score > 50 :
+    if score > 500 :
         if tps==0 :
             Enemi= imageEnemi.get_rect()
             Enemi.x = randint(500,1150)
-            Enemi.y = 500
+            Enemi.y = -500
             ennemis.append(Enemi)
-            tps = 0
+
 
     tps -= 1
 
@@ -240,7 +250,10 @@ while continuer:
     fenetre.blit(imageFond2, rectFond2)
 
     # Affichage Perso
-    fenetre.blit(imagePerso, rectPerso)
+    #fenetre.blit(imagePerso, rectPerso)
+    if i%5==0 :
+        index=(index+1)%len(imagesPerso)
+    fenetre.blit(imagesPerso[index], rectPerso)
 
     # Affichage enemi
     for Enemi in ennemis:
@@ -265,8 +278,6 @@ while continuer:
     rectText2 = imageText2.get_rect()
     rectText2.x = 1200
     rectText2.y = 10
-
-
 
     # rafraichissement
     pygame.display.update()
